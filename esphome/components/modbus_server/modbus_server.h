@@ -61,12 +61,17 @@ class ModbusServer : public esphome::uart::UARTDevice, public Component, public 
   /// @param numregs number of registers to watch
   void on_write_holding_register(uint16_t address, cbOnReadWrite cb, uint16_t numregs = 1);
 
+  void set_flow_control_pin(GPIOPin *flow_control_pin) { this->flow_control_pin_ = flow_control_pin; }
+  
   // Stream implementation required by ModbusRTU library
   size_t write(uint8_t);
   int available();
   int read();
   int peek();
   void flush();
+  
+ protected:
+  GPIOPin *flow_control_pin_{nullptr};
 
  private:
   ModbusRTU mb;  // ModbusRTU instance, the man behind the curtain

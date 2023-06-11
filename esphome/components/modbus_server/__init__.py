@@ -1,7 +1,13 @@
 import esphome.codegen as cg
 import esphome.config_validation as cv
+from esphome.cpp_helpers import gpio_pin_expression
 from esphome.components import uart
-from esphome.const import CONF_ADDRESS, CONF_ID
+from esphome.const import (
+        CONF_ADDRESS,
+        CONF_ID,
+        CONF_FLOW_CONTROL_PIN,
+)
+from esphome import pins
 
 CONF_START_ADDRESS = "start_address"
 CONF_DEFAULT = "default"
@@ -18,6 +24,7 @@ CONFIG_SCHEMA = (
     cv.Schema(
         {
             cv.GenerateID(): cv.declare_id(ModbusDeviceComponent),
+            cv.Optional(CONF_FLOW_CONTROL_PIN): pins.gpio_output_pin_schema,
             cv.Required(CONF_ADDRESS): cv.positive_int,
             cv.Optional("holding_registers"): cv.ensure_list(
                 cv.Schema(
@@ -48,6 +55,9 @@ async def to_code(config):
     server = cg.new_Pvariable(id)
     cg.add(server.set_uart_parent(uart))
     cg.add(server.set_address(config[CONF_ADDRESS]))
+    if CONF_FLOW_CONTROL_PIN in config:
+        pin = await gpio_pin_expression(config[CONF_FLOW_CONTROL_PIN])
+        cg.add(var.set_flow_control_pin(pin))
     if "holding_registers" in config:
         for reg in config["holding_registers"]:
             cg.add(
