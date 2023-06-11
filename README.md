@@ -14,8 +14,6 @@ esp32:
   variant: esp32
   framework:
     type: arduino
-    version: '2.0.2'
-    platform_version: '4.0.0'
 
 external_components:
   - source: github://kecajtop/esphome-modbus-server@master
