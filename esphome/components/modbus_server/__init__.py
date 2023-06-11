@@ -57,7 +57,7 @@ async def to_code(config):
     cg.add(server.set_address(config[CONF_ADDRESS]))
     if CONF_FLOW_CONTROL_PIN in config:
         pin = await gpio_pin_expression(config[CONF_FLOW_CONTROL_PIN])
-        cg.add(var.set_flow_control_pin(pin))
+        cg.add(server.set_flow_control_pin(pin))
     if "holding_registers" in config:
         for reg in config["holding_registers"]:
             cg.add(
