@@ -8,6 +8,17 @@
 
 #define TAG "ModbusServer"
 
+union {
+    word regs[2];
+    float fval; 
+  } bfloat;
+
+void float2Regs (float val, word & reg1, word  & reg2 ) {
+  bfloat.fval = val;
+  reg1 = bfloat.regs[1];
+  reg2 = bfloat.regs[0];
+}
+
 namespace esphome {
 namespace modbus_server {
 ModbusServer::ModbusServer() {}
