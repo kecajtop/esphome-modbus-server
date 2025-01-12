@@ -12,17 +12,6 @@ namespace esphome {
 namespace modbus_server {
 ModbusServer::ModbusServer() {}
 
-union {
-    word regs[2];
-    float fval; 
-  } bfloat;
-
-void float2Regs (float val, word & reg1, word  & reg2 ) {
-  bfloat.fval = val;
-  reg1 = bfloat.regs[1];
-  reg2 = bfloat.regs[0];
-}
-
 uint32_t ModbusServer::baudRate() { return this->parent_->get_baud_rate(); }
 
 void ModbusServer::dump_config() {
