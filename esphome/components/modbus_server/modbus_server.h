@@ -19,7 +19,7 @@ using namespace std;
 
 // callback for read and write lambdas
 typedef std::function<uint16_t(uint16_t reg, uint16_t val)> cbOnReadWrite;
-
+float2Regs (float val, word & reg1, word  & reg2 );
 class ModbusServer : public esphome::uart::UARTDevice, public Component, public Stream {
  public:
   explicit ModbusServer();
