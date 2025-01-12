@@ -8,6 +8,10 @@
 
 #define TAG "ModbusServer"
 
+namespace esphome {
+namespace modbus_server {
+ModbusServer::ModbusServer() {}
+
 union {
     word regs[2];
     float fval; 
@@ -18,10 +22,6 @@ void float2Regs (float val, word & reg1, word  & reg2 ) {
   reg1 = bfloat.regs[1];
   reg2 = bfloat.regs[0];
 }
-
-namespace esphome {
-namespace modbus_server {
-ModbusServer::ModbusServer() {}
 
 uint32_t ModbusServer::baudRate() { return this->parent_->get_baud_rate(); }
 
